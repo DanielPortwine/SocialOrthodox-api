@@ -6,16 +6,22 @@
 
         <title>{{ config('app.name') }}</title>
 
-        @vite('resources/css/app.css')
+        @vite(['resources/css/app.css'])
         @vite(['resources/js/app.js'])
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-              integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-              crossorigin=""/>
-        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-                integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-                crossorigin=""></script>
+{{--        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>--}}
+
+{{--        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"--}}
+{{--              integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="--}}
+{{--              crossorigin=""/>--}}
+{{--        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"--}}
+{{--                integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="--}}
+{{--                crossorigin=""></script>--}}
+
+            <script src="{{ asset('js/axios.min.js') }}"></script>
+
+            <link rel="stylesheet" href="{{ asset('css/leaflet.css') }}" />
+            <script src="{{ asset('js/leaflet.js') }}"></script>
 
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}">
     </head>
@@ -172,7 +178,7 @@
                 <!-- Sidebar component, swap this element with another sidebar if you like -->
                 <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
                     <div class="flex h-16 shrink-0 items-center">
-                        <img class="h-16 w-auto mr-2" src="https://cdn.discordapp.com/attachments/1092443485442936864/1116848015907504291/SO1_128.png" alt="Social Orthodox">
+                        <img class="h-16 w-auto mr-2" src="{{ asset('SO1_128.png') }}" alt="Social Orthodox">
                         <h1 class="text-2xl text-white font-semibold mt-2">Social Orthodox</h1>
                     </div>
                     <h3 class="text-white">Enter the details to add your parish to the map.</h3>
