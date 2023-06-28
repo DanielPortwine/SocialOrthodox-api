@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreParish;
+use App\Http\Requests\UpdateParish;
 use App\Models\Parish;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ParishController extends Controller
 {
@@ -17,18 +18,12 @@ class ParishController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreParish $request)
     {
+        $request->merge(['user_id' => Auth::id()]);
+
         $parish = Parish::create($request->all());
 
         return response()->json($parish, 201);
@@ -39,30 +34,40 @@ class ParishController extends Controller
      */
     public function show(Parish $parish)
     {
+        $parish->load(['members', 'manager']);
         return response()->json($parish, 201);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateParish $request, int $id)
     {
-        //
+        $parish = Parish::where('id', $id)->first();
+
+        if (Auth::id() !== $parish->user_id) {
+            return response()->json(['message' => 'Unauthorized.'], 403);
+        }
+
+        $parish->update($request->all());
+
+        return response()->json($parish, 201);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(int $id)
     {
-        //
+        $parish = Parish::where('id', $id)->first();
+
+        if (Auth::id() !== $parish->user_id) {
+            return response()->json(['message' => 'Unauthorized.'], 403);
+        }
+
+        if ($parish) {
+            $parish->delete();
+            return response()->json(null, 204);
+        }
     }
 }

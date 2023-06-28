@@ -10,10 +10,21 @@ class Parish extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'name',
         'website',
         'facebook',
         'lat',
         'long',
     ];
+
+    public function members()
+    {
+        return $this->belongsToMany(User::class, 'parish_user');
+    }
+
+    public function manager()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

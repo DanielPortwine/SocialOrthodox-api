@@ -42,4 +42,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function parishes()
+    {
+        return $this->belongsToMany(Parish::class);
+    }
+
+    public function managedParishes()
+    {
+        return $this->hasMany(Parish::class);
+    }
 }

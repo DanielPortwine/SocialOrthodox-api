@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('parishes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
             $table->string('name');
             $table->string('website')->nullable();
             $table->string('facebook')->nullable();
             $table->string('lat');
             $table->string('long');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
