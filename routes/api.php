@@ -1,8 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\ParishController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +38,16 @@ Route::prefix('parishes')->group(function () {
         Route::post('/', [ParishController::class, 'store']);
         Route::put('/{id}', [ParishController::class, 'update']);
         Route::delete('/{id}', [ParishController::class, 'destroy']);
+    });
+});
+
+Route::prefix('events')->group(function () {
+    Route::get('/', [EventController::class, 'index']);
+    Route::get('/{event}', [EventController::class, 'show']);
+    Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+        Route::post('/', [EventController::class, 'store']);
+        Route::put('/{id}', [EventController::class, 'update']);
+        Route::delete('/{id}', [EventController::class, 'destroy']);
     });
 });
 

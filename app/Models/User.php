@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Parish::class);
     }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class);
+    }
 }
