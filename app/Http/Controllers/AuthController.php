@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterUser;
+use App\Http\Requests\UpdateUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -58,4 +60,33 @@ class AuthController extends Controller
         return response()->json(['message' => 'Verification link sent!'], 200);
     }
 
+    public function update(UpdateUser $request, int $id)
+    {
+        $user = User::where('id', $id)->first();
+
+        if (Auth::id() !== $user->id) {
+            return response()->json(['message' => 'Unauthorized.'], 403);
+        }
+
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        return response()->json($user, 201);
+    }
+
+    public function destroy(int $id)
+    {
+        $user = User::where('id', $id)->first();
+
+        if (Auth::id() !== $user->id) {
+            return response()->json(['message' => 'Unauthorized. ' . $user->id . ' | ' . Auth::id()], 403);
+        }
+
+        $user->delete();
+
+        return response()->json(['message' => 'User deleted.'], 201);
+    }
 }

@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('users')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
+    Route::middleware(['auth:sanctum'])->group(function () {
+        Route::put('/{id}', [AuthController::class, 'update']);
+        Route::delete('/{id}', [AuthController::class, 'destroy']);
+    });
 });
 
 Route::prefix('email')->group(function () {
