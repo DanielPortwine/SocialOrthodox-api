@@ -17,6 +17,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::middleware(['auth:sanctum', 'verified'])->get('/user', function (Request $request) {
+    $request->user()->makeVisible(['email', 'email_verified_at']);
+
+    return $request->user();
+});
+
 Route::prefix('users')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::middleware(['auth:sanctum'])->group(function () {
@@ -53,8 +59,4 @@ Route::prefix('events')->group(function () {
         Route::put('/{id}', [EventController::class, 'update']);
         Route::delete('/{id}', [EventController::class, 'destroy']);
     });
-});
-
-Route::middleware(['auth:sanctum', 'verified'])->get('/user', function (Request $request) {
-    return $request->user();
 });

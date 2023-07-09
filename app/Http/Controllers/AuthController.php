@@ -22,7 +22,10 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'private' => $request->private ?? true,
         ]);
+
+        $user->makeVisible(['email', 'email_verified_at']);
 
         $token = $user->createToken('apptoken')->plainTextToken;
 
@@ -36,11 +39,11 @@ class AuthController extends Controller
         return response()->json($response, 201);
     }
 
-    public function verifyEmail(Request $request)
+    public function verifyEmail(int $id, string $hash)
     {
-        $user = User::where('id', $request->id)->first();
+        $user = User::withoutGlobalScope('private')->where('id', $id)->first();
 
-        if (! hash_equals((string) $request->hash, sha1($user->getEmailForVerification()))) {
+        if (! hash_equals($hash, sha1($user->getEmailForVerification()))) {
             return response()->json(['message' => 'Invalid verification link'], 400);
         }
 
@@ -72,7 +75,10 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
+            'private' => $request->private ?? true,
         ]);
+
+        $user->makeVisible(['email', 'email_verified_at']);
 
         return response()->json($user, 201);
     }

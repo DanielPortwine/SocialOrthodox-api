@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -21,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'private',
     ];
 
     /**
@@ -30,6 +32,8 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password',
+        'email',
+        'email_verified_at',
         'remember_token',
     ];
 
@@ -42,6 +46,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // global scope for private users
+//    protected static function booted()
+//    {
+//        static::addGlobalScope('private', function ($query) {
+//            $query->where('private', false)
+//                ->orWhere('id', Auth::id());
+//        });
+//    }
 
     public function parishes()
     {
