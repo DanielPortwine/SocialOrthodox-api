@@ -63,6 +63,21 @@ class AuthController extends Controller
         return response()->json(['message' => 'Verification link sent!'], 200);
     }
 
+    public function refreshToken()
+    {
+        $user = Auth::user();
+
+        $token = $user->createToken('apptoken')->plainTextToken;
+
+        $user->currentAccessToken()->update(['expires_at' => now()]);
+
+        $response = [
+            'token' => $token,
+        ];
+
+        return response()->json($response, 201);
+    }
+
     public function update(UpdateUser $request, int $id)
     {
         $user = User::where('id', $id)->first();

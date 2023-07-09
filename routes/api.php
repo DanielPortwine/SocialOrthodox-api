@@ -26,6 +26,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/user', function (Request 
 Route::prefix('users')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::middleware(['auth:sanctum'])->group(function () {
+        Route::get('/refresh-token', [AuthController::class, 'refreshToken']);
         Route::put('/{id}', [AuthController::class, 'update']);
         Route::delete('/{id}', [AuthController::class, 'destroy']);
     });
