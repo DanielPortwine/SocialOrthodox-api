@@ -28,6 +28,7 @@ return new class extends Migration
             $table->dateTime('registration_end')->nullable();
             $table->string('registration_link')->nullable();
             $table->integer('price')->nullable();
+            $table->enum('visibility', ['public', 'private', 'link'])->default('private');
             $table->timestamps();
         });
     }

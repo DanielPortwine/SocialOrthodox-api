@@ -32,9 +32,13 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Event $event)
+    public function show(string $id)
     {
-        $event->load(['organiser', 'parish']);
+        $event = Event::withoutGlobalScopes(['public'])
+            ->with(['organiser', 'parish'])
+            ->link()
+            ->where('id', $id)
+            ->first();
 
         return response()->json($event, 201);
     }

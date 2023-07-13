@@ -54,7 +54,7 @@ Route::prefix('parishes')->group(function () {
 
 Route::prefix('events')->group(function () {
     Route::get('/', [EventController::class, 'index']);
-    Route::get('/{event}', [EventController::class, 'show']);
+    Route::get('/{id}', [EventController::class, 'show']);
     Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::post('/', [EventController::class, 'store']);
         Route::put('/{id}', [EventController::class, 'update']);

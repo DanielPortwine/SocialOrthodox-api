@@ -37,6 +37,7 @@ class StoreEvent extends FormRequest
             'registration_end' => 'nullable|date',
             'registration_link' => 'nullable|string',
             'price' => 'nullable|numeric|min:0',
+            'visibility' => 'required|string|in:public,private,link',
         ];
     }
 }
