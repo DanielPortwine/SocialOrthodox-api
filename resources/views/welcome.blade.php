@@ -178,7 +178,7 @@
                 <!-- Sidebar component, swap this element with another sidebar if you like -->
                 <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-gray-900 px-6 pb-4">
                     <div class="flex h-16 shrink-0 items-center">
-                        <img class="h-16 w-auto mr-2" src="{{ asset('SO1_128.png') }}" alt="Social Orthodox">
+                        <img class="h-16 w-auto mr-2" src="{{ asset('SO3_256.png') }}" alt="Social Orthodox">
                         <h1 class="text-2xl text-white font-semibold mt-2">Social Orthodox</h1>
                     </div>
                     <h3 class="text-white">Enter the details to add your parish to the map.</h3>
